@@ -21,7 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         data: {
           message: "Catalog and catalogType are required.",
           usage:
-            "Please provide query parameters catalog and catalogType. Example: /api/index?catalog=levels&catalogType=gameVersion",
+            "Please provide query parameters catalog and catalogType. Example: ?catalog=community&catalogType=level",
           hint: "If you think you are in the right place, ensure to use the proper query parameter structure.",
         },
         isError: true,
