@@ -2,6 +2,7 @@
   "name": "manic-miners-catalog",
   "version": "1.0.0",
   "description": "A serverless function for hosting and managing the Manic Miners content catalog, hosted at index.manicminers.net.",
+  "domain": "https://index.manicminers.net/",
   "repository": "https://github.com/Wal33D/manic-vercel-index.git",
   "license": "MIT",
   "private": true,
@@ -16,6 +17,7 @@
   },
   "vercel": {
     "projectId": "prj_f4NLwaLOWtp11qpIURqQF0unFsT6",
-    "projectName": "manic-catalog-index"
+    "projectName": "manic-catalog-index",
+    "projectRelease": "https://manic-catalog-index-git-main-wal33ds-projects.vercel.app/"
   }
 }
