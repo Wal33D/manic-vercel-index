@@ -114,5 +114,7 @@ GET https://manic-catalog-index-git-main-wal33ds-projects.vercel.app/?catalog=co
 - **GitHub Repository:** [https://github.com/Wal33D/manic-vercel-index](https://github.com/Wal33D/manic-vercel-index)
 - **Vercel Project Name:** manic-catalog-index
 - **Vercel Project ID:** prj_f4NLwaLOWtp11qpIURqQF0unFsT6
+- **Domain:** [https://index.manicminers.net/](https://index.manicminers.net/)
+- **Project Release:** [https://manic-catalog-index-git-main-wal33ds-projects.vercel.app/](https://manic-catalog-index-git-main-wal33ds-projects.vercel.app/)
 
 Made with ❤️ for the Manic Miners community by Waleed Judah.
