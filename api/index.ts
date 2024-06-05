@@ -30,11 +30,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     let data;
     data = await getCatalogIndex(catalog, catalogType, catalogId, mongoId);
-
-    return res.status(200).json({
-      data,
-      isError: false,
-    });
+    return res.status(200).send(
+      JSON.stringify(
+        {
+          data,
+          isError: false,
+        },
+        null,
+        2
+      )
+    );
   } catch (error: any) {
     console.error("Error processing request:", error);
     return res.status(500).json({
