@@ -11,7 +11,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const catalog = (req.query.catalog as string)?.toLowerCase();
     const catalogType = (req.query.catalogType as string)?.toLowerCase();
-    const catalogId = req.query.catalogId as string | undefined;
+    const catalogId = req.query.catalogId
+      ? parseInt(req.query.catalogId as string)
+      : undefined;
     const mongoId = req.query._id as string | undefined;
 
     if (!catalog || !catalogType) {
@@ -96,7 +98,7 @@ const getCatalogCollection = async (
 export const getCatalogIndex = async (
   catalog: string,
   catalogType: string,
-  catalogId?: string,
+  catalogId?: number,
   mongoId?: string
 ): Promise<{
   catalog: string;
