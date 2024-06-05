@@ -91,7 +91,14 @@ GET https://manic-catalog-index-git-main-wal33ds-projects.vercel.app/?catalog=co
     "catalogType": "community",
     "count": 5,
     "levels": [
-      // Array of levels
+      {
+        "_id": "6660c9df1ebe3a905a064bb8",
+        "catalog": "hognose",
+        "catalogType": "level",
+        "catalogId": 11742049542818,
+        "preRelease": false,
+        "...": "..."
+      }
     ]
   },
   "isError": false
