@@ -77,7 +77,7 @@ Retrieve catalog content based on query parameters.
 #### Example Request
 
 ```http
-GET /api/index?catalog=levels&catalogType=gameVersion&catalogId=1
+GET https://index.manicminers.net/?catalog=community&catalogType=level
 ```
 
 #### Example Response
