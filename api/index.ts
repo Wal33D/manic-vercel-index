@@ -1,11 +1,9 @@
-
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getHognoseIndex } from "../utils/getHognoseIndex";
-import { createApiResponse } from "../utils/createApiResponse";
 
-export default async function GET(request: Request): Promise<Response> {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    const url = new URL(request.url);
-    const catalog = url.searchParams.get('catalog');
+    const catalog = req.query.catalog as string;
 
     let data;
 
@@ -13,12 +11,21 @@ export default async function GET(request: Request): Promise<Response> {
       // Return hognose index if 'hognose' is specified or if no catalog is specified
       data = await getHognoseIndex();
     } else {
-      return createApiResponse({ data: 'Catalog not found or unsupported', isError: true, request });
+      return res.status(400).json({
+        data: 'Catalog not found or unsupported',
+        isError: true
+      });
     }
 
-    return createApiResponse({ data, isError: false, request });
+    return res.status(200).json({
+      data,
+      isError: false
+    });
   } catch (error: any) {
     console.error("Error processing request:", error);
-    return createApiResponse({ data: error.message, isError: true, request });
+    return res.status(500).json({
+      data: error.message,
+      isError: true
+    });
   }
 }
