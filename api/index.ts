@@ -18,7 +18,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (!catalog || !catalogType) {
       return res.status(400).json({
-        data: "catalog and catalogType are required",
+        data: {
+          message: "Catalog and catalogType are required.",
+          usage:
+            "Please provide query parameters catalog and catalogType. Example: /api/index?catalog=levels&catalogType=gameVersion",
+          hint: "If you think you are in the right place, ensure to use the proper query parameter structure.",
+        },
         isError: true,
       });
     }
