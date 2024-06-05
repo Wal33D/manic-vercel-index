@@ -78,6 +78,8 @@ Retrieve catalog content based on query parameters.
 
 ```http
 GET https://index.manicminers.net/?catalog=community&catalogType=level
+or
+GET https://manic-catalog-index-git-main-wal33ds-projects.vercel.app/?catalog=community&catalogType=level
 ```
 
 #### Example Response
