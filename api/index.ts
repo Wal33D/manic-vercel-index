@@ -1,5 +1,11 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { MongoClient, Db, Collection, ServerApiVersion, ObjectId } from "mongodb";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import {
+  MongoClient,
+  Db,
+  Collection,
+  ServerApiVersion,
+  ObjectId,
+} from "mongodb";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
@@ -10,30 +16,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (!catalog || !catalogType) {
       return res.status(400).json({
-        data: 'catalog and catalogType are required',
-        isError: true
+        data: "catalog and catalogType are required",
+        isError: true,
       });
     }
 
     let data;
-    if (catalog === 'hognose') {
+    if (catalog === "hognose") {
       data = await getHognoseIndex(catalogType, catalogId, mongoId);
     } else {
       return res.status(400).json({
-        data: 'Catalog not found or unsupported',
-        isError: true
+        data: "Catalog not found or unsupported",
+        isError: true,
       });
     }
 
     return res.status(200).json({
       data,
-      isError: false
+      isError: false,
     });
   } catch (error: any) {
     console.error("Error processing request:", error);
     return res.status(500).json({
       data: error.message,
-      isError: true
+      isError: true,
     });
   }
 }
@@ -46,12 +52,19 @@ const {
   CATALOG_NAME: collectionName = "hognose",
 } = process.env;
 
-const uri = `mongodb+srv://${encodeURIComponent(dbUsername)}:${encodeURIComponent(dbPassword)}@${dbClusterName}/${dbName}?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${encodeURIComponent(
+  dbUsername
+)}:${encodeURIComponent(
+  dbPassword
+)}@${dbClusterName}/${dbName}?retryWrites=true&w=majority`;
 
 let client: MongoClient | null = null;
 let db: Db | null = null;
 
-const connectWithRetry = async (uri: string, attempts = 5): Promise<MongoClient> => {
+const connectWithRetry = async (
+  uri: string,
+  attempts = 5
+): Promise<MongoClient> => {
   for (let attempt = 1; attempt <= attempts; attempt++) {
     try {
       const client = new MongoClient(uri, {
@@ -65,7 +78,8 @@ const connectWithRetry = async (uri: string, attempts = 5): Promise<MongoClient>
       return client;
     } catch (error) {
       console.error(`Attempt ${attempt} failed: ${(error as Error).message}`);
-      if (attempt < attempts) await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+      if (attempt < attempts)
+        await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
       else throw error;
     }
   }
@@ -86,8 +100,8 @@ const getHognoseLevelsCollection = async (): Promise<Collection> => {
 };
 
 export const getHognoseIndex = async (
-  catalogType: string, 
-  catalogId?: string, 
+  catalogType: string,
+  catalogId?: string,
   mongoId?: string
 ): Promise<{
   catalog: string;
@@ -106,5 +120,10 @@ export const getHognoseIndex = async (
   }
 
   const levels = await collection.find(query).toArray();
-  return { catalog: "hognose", catalogType, count: levels.length, levels };
+  return {
+    catalog: process.env.CATALOG_NAME as string,
+    catalogType,
+    count: levels.length,
+    levels,
+  };
 };

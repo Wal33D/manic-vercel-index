@@ -63,5 +63,10 @@ export const getHognoseIndex = async (): Promise<{
 }> => {
   const collection = await getHognoseLevelsCollection();
   const levels = await collection.find().toArray();
-  return {  catalog: "hognose", catalogType:'level',count: levels.length | 0, levels };
+  return {
+    catalog: process.env.CATALOG_NAME as string,
+    catalogType: "level",
+    count: levels.length | 0,
+    levels,
+  };
 };
