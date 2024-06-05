@@ -1,5 +1,8 @@
 {
-  "repository": "",
+  "name": "manic-miners-catalog",
+  "version": "1.0.0",
+  "description": "A serverless function for hosting and managing the Manic Miners content catalog, hosted at index.manicminers.net.",
+  "repository": "https://github.com/Wal33D/manic-vercel-index.git",
   "license": "MIT",
   "private": true,
   "devDependencies": {
@@ -10,5 +13,9 @@
   "dependencies": {
     "mongodb": "^6.7.0",
     "save": "^2.9.0"
+  },
+  "vercel": {
+    "projectId": "prj_f4NLwaLOWtp11qpIURqQF0unFsT6",
+    "projectName": "manic-catalog-index"
   }
 }
