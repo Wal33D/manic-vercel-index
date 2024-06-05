@@ -78,7 +78,11 @@ Retrieve catalog content based on query parameters.
 
 ```http
 GET https://index.manicminers.net/?catalog=community&catalogType=level
+```
+
 or
+
+```http
 GET https://manic-catalog-index-git-main-wal33ds-projects.vercel.app/?catalog=community&catalogType=level
 ```
 
@@ -111,4 +115,4 @@ GET https://manic-catalog-index-git-main-wal33ds-projects.vercel.app/?catalog=co
 - **Vercel Project Name:** manic-catalog-index
 - **Vercel Project ID:** prj_f4NLwaLOWtp11qpIURqQF0unFsT6
 
-Made with ❤️ for the Manic Miners community.
+Made with ❤️ for the Manic Miners community by Waleed Judah.
