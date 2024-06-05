@@ -9,8 +9,8 @@ import {
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    const catalog = req.query.catalog as string;
-    const catalogType = req.query.catalogType as string;
+    const catalog = (req.query.catalog as string)?.toLowerCase();
+    const catalogType = (req.query.catalogType as string)?.toLowerCase();
     const catalogId = req.query.catalogId as string | undefined;
     const mongoId = req.query._id as string | undefined;
 
@@ -22,14 +22,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     let data;
-    if (catalog === "hognose") {
-      data = await getHognoseIndex(catalogType, catalogId, mongoId);
-    } else {
-      return res.status(400).json({
-        data: "Catalog not found or unsupported",
-        isError: true,
-      });
-    }
+    data = await getCatalogIndex(catalog, catalogType, catalogId, mongoId);
 
     return res.status(200).json({
       data,
@@ -49,7 +42,6 @@ const {
   DB_PASSWORD: dbPassword = "",
   DB_NAME: dbName = "",
   DB_CLUSTER: dbClusterName = "",
-  CATALOG_NAME: collectionName = "hognose",
 } = process.env;
 
 const uri = `mongodb+srv://${encodeURIComponent(
@@ -94,12 +86,15 @@ const connectToMongo = async (): Promise<Db> => {
   return db as Db;
 };
 
-const getHognoseLevelsCollection = async (): Promise<Collection> => {
+const getCatalogCollection = async (
+  catalogName: string
+): Promise<Collection> => {
   const db = await connectToMongo();
-  return db.collection(collectionName);
+  return db.collection(catalogName);
 };
 
-export const getHognoseIndex = async (
+export const getCatalogIndex = async (
+  catalog: string,
   catalogType: string,
   catalogId?: string,
   mongoId?: string
@@ -109,8 +104,10 @@ export const getHognoseIndex = async (
   count: number;
   levels: any[];
 }> => {
-  const collection = await getHognoseLevelsCollection();
-  const query: any = { catalogType };
+  const collection = await getCatalogCollection(catalog);
+  const query: any = {
+    catalogType: { $regex: new RegExp(`^${catalogType}$`, "i") },
+  };
 
   if (catalogId) {
     query.catalogId = catalogId;
@@ -120,10 +117,5 @@ export const getHognoseIndex = async (
   }
 
   const levels = await collection.find(query).toArray();
-  return {
-    catalog: process.env.CATALOG_NAME as string,
-    catalogType,
-    count: levels.length,
-    levels,
-  };
+  return { catalog, catalogType, count: levels.length, levels };
 };
